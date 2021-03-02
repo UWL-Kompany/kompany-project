@@ -2,22 +2,30 @@ import React, { useState } from "react";
 //import Navigation from "./Navigation";
 
 function Header(props) {
+  const HeaderButton = ({ name }) => {
+    return (
+      <div class="cursor-pointer flex w-20 justify-center bg-gray-200 m-2 border-black border-2">
+        {name}
+      </div>
+    );
+  };
+
   return (
     // a header component that is always displayed at the top of the page
     // plus a navigation componet
-    <header className="border-b p-3 flex justify-between">
+    <header className="border-b p-3 flex justify-between items-center">
       {/* <Navigation /> */}
-      <div className="border-b p-3 flex ">
+      <div className="p-3 flex ">
         <div>
-          <div>Login</div>
-          <div>About Us</div>
+          <HeaderButton name="Login" />
+          <HeaderButton name="About Us" />
         </div>
         <div>
-          <div>Register</div>
-          <div>Products</div>
+          <HeaderButton name="Register" />
+          <HeaderButton name="Products" />
         </div>
       </div>
-      <div className="flex font-bold text-black text-xl mr-5 text-right">
+      <div className="flex font-bold text-black text-4xl mr-5 text-right">
         Kompany
       </div>
       <div class="inset-y-0 right-0 flex items-center">
