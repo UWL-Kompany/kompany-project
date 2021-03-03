@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import DealsBanner from "../Components/DealBanner";
 // import logo from "../Images/UWL-Logo.png";
 
-const Courses = (props) => {
+const Home = (props) => {
   // the main home page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
   // uses Tailwind CSS for styling
@@ -59,4 +59,4 @@ const Courses = (props) => {
   );
 };
 
-export default Courses;
+export default Home;
