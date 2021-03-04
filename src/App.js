@@ -8,6 +8,8 @@ import Footer from "./Components/Footer";
 import Home from "./Views/Home";
 import Products from "./Views/Products";
 import Product from "./Views/Product";
+import Login from "./Views/Login";
+import Register from "./Views/Register";
 
 function App() {
   return (
@@ -23,6 +25,12 @@ function App() {
           </Route>
           <Route path="/product/:id">
             <Product />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/register">
+            <Register />
           </Route>
         </Switch>
         <Footer />
