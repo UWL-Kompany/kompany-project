@@ -35,25 +35,8 @@ const Home = (props) => {
       <div class="flex flex-row h-screen w-full mt-5">
         <div class="flex flex-col w-full h-full mx-5 rounded-sm p-3">
           <ProductList />
-          {/* <div class="flex justify-between">
-            <div class="flex h-40 w-40 rounded-xl bg-blue-300 justify-center items-center">
-              Test Image
-            </div>
-            <div class="flex h-40 w-40 rounded-xl bg-blue-300 justify-center items-center">
-              Test Image
-            </div>
-            <div class="flex h-40 w-40 rounded-xl bg-blue-300 justify-center items-center">
-              Test Image
-            </div>
-            <div class="flex h-40 w-40 rounded-xl bg-blue-300 justify-center items-center">
-              Test Image
-            </div>
-          </div> */}
           <div class="font-bold mt-10">Check out our product range!</div>
         </div>
-        {/* <div class="flex w-6/12 h-100 mx-5 bg-gray-300 rounded-sm p-3 justify-center">
-          <img src={logo} alt="logo" />
-        </div> */}
       </div>
     </div>
   );

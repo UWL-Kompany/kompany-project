@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 //import Navigation from "./Navigation";
 
 import Basket from "./Basket";
 
 function Header(props) {
+  const login = useSelector((state) => state.account.login);
+
   const HeaderButton = ({ name, link }) => {
     return (
       <Link to={"/" + link} className="flex justify-between">
@@ -22,11 +25,15 @@ function Header(props) {
       {/* <Navigation /> */}
       <div className="p-3 flex ">
         <div>
-          <HeaderButton name="Login" link="login" />
+          {login ? (
+            <HeaderButton name="Account" link="login" />
+          ) : (
+            <HeaderButton name="Login" link="login" />
+          )}
           <HeaderButton name="About Us" link="products" />
         </div>
         <div>
-          <HeaderButton name="Register" link="register" />
+          {login ? null : <HeaderButton name="Register" link="register" />}
           <HeaderButton name="Products" link="products" />
         </div>
       </div>

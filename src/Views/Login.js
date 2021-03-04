@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import logo from "../Images/UWL-Logo.png";
 
+import {
+  toggleAccountLogin,
+  changeDetails,
+} from "../Redux/Actions/accountActions";
+
 const Login = (props) => {
   // the main Products page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
   // uses Tailwind CSS for styling
-
+  const login = useSelector((state) => state.account.login);
   const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //console.log("login status: " + login.toString());
+  }, []);
 
   return (
     <div class="flex flex-col h-screen w-full justify-start justify-items-center content-center items-center place-content-center">
@@ -35,9 +42,12 @@ const Login = (props) => {
           <input type="checkbox" class="form-checkbox mr-2"></input>
           <p>Remember Me</p>
         </div>
-        <div class="flex w-1/4 border-black border-2 bg-gray-200 rounded-l self-start ">
-          <div class="w-full text-center">Login</div>
-        </div>
+        <button
+          class="cursor-pointer flex w-1/4 border-black border-2 bg-gray-200 rounded-l self-start"
+          onClick={(e) => dispatch(toggleAccountLogin(true))}
+        >
+          <p class="w-full text-center">Login</p>
+        </button>
       </div>
     </div>
   );
