@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import Basket from "./Basket";
 
 function Header(props) {
-  const HeaderButton = ({ name }) => {
+  const HeaderButton = ({ name, link }) => {
     return (
-      <Link to="/products" className="flex justify-between">
+      <Link to={"/" + link} className="flex justify-between">
         <div class="cursor-pointer flex w-20 justify-center bg-gray-200 m-2 border-black border-2">
           {name}
         </div>
@@ -22,12 +22,12 @@ function Header(props) {
       {/* <Navigation /> */}
       <div className="p-3 flex ">
         <div>
-          <HeaderButton name="Login" />
-          <HeaderButton name="About Us" />
+          <HeaderButton name="Login" link="login" />
+          <HeaderButton name="About Us" link="products" />
         </div>
         <div>
-          <HeaderButton name="Register" />
-          <HeaderButton name="Products" />
+          <HeaderButton name="Register" link="register" />
+          <HeaderButton name="Products" link="products" />
         </div>
       </div>
       <div className="flex font-bold text-black text-4xl mr-5 text-right">
