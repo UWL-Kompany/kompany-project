@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 
 import Basket from "./Basket";
 
+import logo_small from "../Assets/Images/logo-small.png";
+import logo_big from "../Assets/Images/logo-big.png";
+
 function Header(props) {
   const login = useSelector((state) => state.account.login);
 
@@ -37,9 +40,10 @@ function Header(props) {
           <HeaderButton name="Products" link="products" />
         </div>
       </div>
-      <div className="flex font-bold text-black text-4xl mr-5 text-right">
-        Kompany
-      </div>
+      <img
+        className="flex font-bold text-black text-4xl mr-5 text-right h-20 rounded-md"
+        src={logo_big}
+      />
       <div class="flex inset-y-0 right-0 flex-col items-center justify-between w-1/4 h-full">
         <input
           type="text"
