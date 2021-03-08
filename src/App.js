@@ -11,6 +11,7 @@ import Product from "./Views/Product";
 import Login from "./Views/Login";
 import Register from "./Views/Register";
 import Checkout from "./Views/Checkout";
+import Account from "./Views/Account";
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route exact path="/register">
             <Register />
+          </Route>
+          <Route exact path="/account">
+            <Account />
           </Route>
           <Route exact path="/checkout">
             <Checkout />

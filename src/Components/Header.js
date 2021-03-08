@@ -29,7 +29,7 @@ function Header(props) {
       <div className="p-3 flex ">
         <div>
           {login ? (
-            <HeaderButton name="Account" link="login" />
+            <HeaderButton name="Account" link="account" />
           ) : (
             <HeaderButton name="Login" link="login" />
           )}
