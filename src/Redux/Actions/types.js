@@ -6,6 +6,7 @@ export const ORDER_PRODUCTS_BY_PRICE = "ORDER_PRODUCTS_BY_PRICE";
 // cart actions
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
 
 // account actions
 export const TOGGLE_ACCOUNT_LOGIN = "TOGGLE_ACCOUNT_LOGIN";
