@@ -3,39 +3,76 @@ import { Link } from "react-router-dom";
 import DealsBanner from "../Components/DealBanner";
 // import logo from "../Images/UWL-Logo.png";
 
+import test_image from "../Assets/Images/port-gun.jpeg";
+
 const Home = (props) => {
   // the main home page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
   // uses Tailwind CSS for styling
 
   let data = [
-    { name: "Test Image", id: 0 },
-    { name: "Test Image", id: 1 },
-    { name: "Test Image", id: 2 },
-    { name: "Test Image", id: 3 },
+    {
+      name: "Portal Gun",
+      id: 0,
+      price: 40,
+      image: "../Assets/Images/port-gun.jpeg",
+    },
+    {
+      name: "Test Image",
+      id: 1,
+      price: 40,
+      image: "../Assets/Images/port-gun.jpeg",
+    },
+    {
+      name: "Test Image",
+      id: 2,
+      price: 40,
+      image: "../Assets/Images/port-gun.jpeg",
+    },
+    {
+      name: "Test Image",
+      id: 3,
+      price: 40,
+      image: "../Assets/Images/port-gun.jpeg",
+    },
   ];
 
-  function ProductList() {
+  function ProductList({ items }) {
     // component to display mapped requirements
-    const listItems = data.map((item) => (
-      <li class="flex h-56 w-56 rounded-xl bg-blue-300 justify-center items-center">
-        {item.name}
-      </li>
+    const listItems = items.map((item) => (
+      <Link
+        class="flex flex-col rounded-xl justify-center items-center p-2 shadow-xl mr-2 ml-2 bg-white"
+        to={{ pathname: "/product/" + item.id, state: item }} // navigate to specified id and pass course data to next screen
+      >
+        <img
+          class="h-40 w-40 bg-gray-700"
+          src={require("../Assets/Images/port-gun.jpeg").default}
+        />
+        <div class="flex flex-col items-start self-start">
+          <b>{item.name}</b>
+          <b class="text-yellow-600">£{item.price}</b>
+        </div>
+      </Link>
     ));
 
     return <ul class={"flex justify-between"}>{listItems}</ul>; // return all list items in a unordered list
   }
 
   return (
-    <div class="flex flex-col h-full w-full justify-center justify-items-center content-center items-center place-content-center">
-      {/* <div class="bg-uwlGreen w-full pl-5 py-2 rounded-lg text-black">
-        <h1 className="font-bold text-4xl font-bold text-left">Home</h1>
-      </div> */}
-      <DealsBanner />
-      <div class="flex flex-row h-screen w-full mt-5">
-        <div class="flex flex-col w-full h-full mx-5 rounded-sm p-3">
-          <ProductList />
-          <div class="font-bold mt-10">Check out our product range!</div>
+    <div class="flex flex-col h-auto w-full pb-56 justify-center justify-items-center content-center items-center place-content-center">
+      {/* <DealsBanner /> */}
+      <div class="flex flex-col items-center h-screen w-full">
+        <div class="flex flex-col h-full mx-5 rounded-sm p-3">
+          <div class="font-bold text-2xl">Featured Products</div>
+          <ProductList items={data} />
+        </div>
+        <div class="flex flex-col h-full mx-5 rounded-sm p-3">
+          <div class="font-bold mt-10 text-2xl">Recently View</div>
+          <ProductList items={data} />
+        </div>
+        <div class="flex flex-col h-full mx-5 rounded-sm p-3">
+          <div class="font-bold mt-10 text-2xl">Trending</div>
+          <ProductList items={data} />
         </div>
       </div>
     </div>
