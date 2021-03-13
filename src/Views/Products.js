@@ -69,7 +69,20 @@ const Products = (props) => {
   function ProductList() {
     // component to display mapped requirements
     const listItems = data.map((item) => (
-      <div class="flex flex-col h-64 w-56 rounded-xl bg-blue-300 justify-between items-center p-3">
+      <Link
+        class="flex flex-col rounded-xl justify-center items-center p-2 shadow-xl mr-2 ml-2 bg-white"
+        to={{ pathname: "/product/" + item.id, state: item }} // navigate to specified id and pass course data to next screen
+      >
+        <img
+          class="h-40 w-40 bg-gray-700"
+          src={require("../Assets/Images/port-gun.jpeg").default}
+        />
+        <div class="flex flex-col items-start self-start">
+          <b>{item.name}</b>
+          <b class="text-yellow-600">£{item.price}</b>
+        </div>
+      </Link>
+      /* <div class="flex flex-col h-64 w-56 rounded-xl bg-blue-300 justify-between items-center p-3">
         <div class="flex h-2/3 w-full bg-gray-200">image</div>
         <div>{item.name}</div>
         <Link
@@ -84,7 +97,7 @@ const Products = (props) => {
         >
           Add to Basket
         </button>
-      </div>
+      </div> */
     ));
 
     return (
