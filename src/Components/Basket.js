@@ -2,7 +2,8 @@ import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-//import util from "../util";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons"; // the icons used
 
 import { addToCart, removeFromCart } from "../Redux/Actions/cartActions";
 
@@ -14,21 +15,33 @@ const Basket = ({ props }) => {
   useEffect(() => {}, []);
 
   return (
-    <div className="static alert alert-info">
-      {cartItems.length === 0 ? (
-        "Basket is empty"
-      ) : (
-        <div onClick={() => setVisible(!visible)} class="cursor-pointer">
-          You have {cartItems.length} items in the basket.
-          <i className="fa fa-2x fa-shopping-cart"></i>
-          <hr />
+    <div className="static alert alert-info items-center ">
+      <div
+        class="flex cursor-pointer"
+        onClick={() => setVisible(!visible)} // function called to remove this requirement
+      >
+        <FontAwesomeIcon
+          class="flex h-12 fill-current text-black "
+          icon={faShoppingCart}
+        />
+        <div class="flex self-end border-black border-2 bg-yellow-300 w-6 h-6 items-center justify-center">
+          {cartItems.length}
+          {/* <i className="fa fa-2x fa-shopping-cart"></i>
+        <hr /> */}
         </div>
-      )}
+      </div>
       {cartItems.length > 0 && visible && (
-        <div class="bg-gray-100 w-1/4 absolute right-3">
-          <ul style={{ marginLeft: -25 }}>
+        <div class="bg-gray-100 w-full absolute right-3 rounded-md mt-2 shadow-lg">
+          <div class="w-full rounded-t-md border-primary border-b-2 pt-1 pb-1 text-xl font-bold">
+            Total:{"  £"}
+            {cartItems.reduce((a, c) => a + c.price * c.count, 0)}
+            {/* {util.formatCurrency(
+              cartItems.reduce((a, c) => a + c.price * c.count, 0)
+            )} */}
+          </div>
+          <ul style={{ marginLeft: 0, marginBottom: 10 }}>
             {cartItems.map((item) => (
-              <li key={item.id}>
+              <li key={item.id} class="mr-2 items-center">
                 <b>{item.name}</b>
                 <button
                   style={{ float: "right" }}
@@ -43,16 +56,10 @@ const Basket = ({ props }) => {
               </li>
             ))}
           </ul>
-          <b>
-            Sum:
-            {cartItems.reduce((a, c) => a + c.price * c.count, 0)}
-            {/* {util.formatCurrency(
-              cartItems.reduce((a, c) => a + c.price * c.count, 0)
-            )} */}
-          </b>
+
           <Link
             to={"/checkout"}
-            className="cursor-pointer btn btn-primary ml-5"
+            className="cursor-pointer btn btn-primary ml-5 self-center bg-primary text-white pl-10 pr-10 pt-1 pb-1 rounded-md shadow-lg"
             onClick={() => setVisible(false)}
           >
             Checkout
