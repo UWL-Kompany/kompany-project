@@ -36,7 +36,11 @@ const Checkout = (props) => {
             ? "bg-indigo-400 rounded-md cursor-pointer"
             : ""
         }
-        onClick={() => setSection({ status: name, level: level })}
+        onClick={() =>
+          level <= section.level
+            ? setSection({ status: name, level: level })
+            : {}
+        }
       >
         {name}
       </div>
