@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import DealsBanner from "../Components/DealBanner";
 // import logo from "../Images/UWL-Logo.png";
 
@@ -9,6 +10,19 @@ const Home = (props) => {
   // the main home page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
   // uses Tailwind CSS for styling
+  const history = useHistory();
+  const login = useSelector((state) => state.account.login);
+
+  useEffect(() => {
+    //console.log("login status: " + login.toString());
+    if (!login) {
+      forceNextScreen();
+    }
+  }, []);
+
+  const forceNextScreen = () => {
+    history.push("/login");
+  };
 
   let data = [
     {
