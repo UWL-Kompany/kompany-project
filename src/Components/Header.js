@@ -19,6 +19,8 @@ function Header(props) {
     );
   };
 
+  if (window.location.pathname === "/login") return null;
+
   return (
     // a header component that is always displayed at the top of the page
     // plus a navigation componet
