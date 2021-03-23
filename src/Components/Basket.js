@@ -25,7 +25,7 @@ const Basket = ({ props }) => {
           icon={faShoppingCart}
         />
         <div class="flex self-end border-black border-2 bg-yellow-300 w-6 h-6 items-center justify-center">
-          {cartItems.length}
+          {cartItems.reduce((a, c) => a + c.count, 0)}
           {/* <i className="fa fa-2x fa-shopping-cart"></i>
         <hr /> */}
         </div>
