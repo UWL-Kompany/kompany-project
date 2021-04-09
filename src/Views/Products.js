@@ -82,22 +82,6 @@ const Products = (props) => {
           <b class="text-yellow-600">£{item.price}</b>
         </div>
       </Link>
-      /* <div class="flex flex-col h-64 w-56 rounded-xl bg-blue-300 justify-between items-center p-3">
-        <div class="flex h-2/3 w-full bg-gray-200">image</div>
-        <div>{item.name}</div>
-        <Link
-          to={{ pathname: "/product/" + item.id, state: item }} // navigate to specified id and pass course data to next screen
-          className="flex justify-center"
-        >
-          <div>View Item</div>
-        </Link>
-        <button
-          class="flex w-2/3 justify-center bg-gray-200 m-2 border-black border-2"
-          onClick={(e) => dispatch(addToCart(cartItems, item))}
-        >
-          Add to Basket
-        </button>
-      </div> */
     ));
 
     return (

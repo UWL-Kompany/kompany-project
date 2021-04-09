@@ -15,9 +15,9 @@ const Home = (props) => {
 
   useEffect(() => {
     //console.log("login status: " + login.toString());
-    if (!login) {
-      forceNextScreen();
-    }
+    // if (!login) {
+    //   forceNextScreen();
+    // }
   }, []);
 
   const forceNextScreen = () => {

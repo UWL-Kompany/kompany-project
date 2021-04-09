@@ -22,6 +22,8 @@ import Register from "./Views/Register";
 import Checkout from "./Views/Checkout";
 import Account from "./Views/Account";
 import About from "./Views/About";
+import MyDetails from "./Views/MyDetails";
+import Orders from "./Views/Orders";
 
 function App() {
   const history = useHistory();
@@ -63,7 +65,6 @@ function App() {
         <Route path="/product/:id">
           <Product />
         </Route>
-
         <Route exact path="/account">
           <Account />
         </Route>
@@ -72,6 +73,12 @@ function App() {
         </Route>
         <Route exact path="/about">
           <About />
+        </Route>
+        <Route exact path="/edit_details">
+          <MyDetails />
+        </Route>
+        <Route exact path="/orders">
+          <Orders />
         </Route>
       </Switch>
       <Footer />

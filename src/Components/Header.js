@@ -38,8 +38,9 @@ function Header(props) {
         <div className="flex">
           <HeaderButton name="Home" link="" />
           <HeaderButton name="Products" link="products" />
-          <HeaderButton name="Galactic Items" link="account" />
+          <HeaderButton name="Galactic Items" link="products" />
           <HeaderButton name="My Account" link="account" />
+          <HeaderButton name="About Us" link="about" />
         </div>
         <input
           type="text"
