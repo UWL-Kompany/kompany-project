@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../Redux/Actions/cartActions";
+import { formatPrice } from "../Utils/format";
 // import logo from "../Images/UWL-Logo.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,32 +17,13 @@ const Product = (props) => {
   let data = useLocation().state; // get passed course data, assigns each const based n passsed data
   const [id] = useState(data.id);
   //const [id, setId] = useState(1);
-  const [currItem, setCurrItem] = useState({});
+  const [currItem, setCurrItem] = useState(data);
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
-  let tempData = [
-    { name: "A Clone Trooper", id: 0, price: "30.00", count: 0 },
-    { name: "The Infinity Gauntlet", id: 1, price: "30.00", count: 0 },
-    { name: "Stormbreaker", id: 2, price: "30.00", count: 0 },
-    { name: "Just Cause Grapple", id: 3, price: "30.00", count: 0 },
-    { name: "A Lightsaber", id: 4, price: "30.00", count: 0 },
-    { name: "The Dark Knight Suit", id: 5, price: "30.00", count: 0 },
-    { name: "The Tumbler", id: 6, price: "30.00", count: 0 },
-    {
-      name: "Iron Man MKLXXXV",
-      id: 7,
-      price: "30.00",
-      count: 0,
-      price: "30.00",
-      count: 0,
-    },
-    { name: "Captain America's Shield", id: 8, price: "30.00", count: 0 },
-    { name: "Grogu", id: 9, price: "30.00", count: 0 },
-  ];
 
   useEffect(() => {
-    setCurrItem(tempData[id]);
+    //setCurrItem(tempData[id]);
   }, []);
 
   const StarRating = ({ count }) => {
@@ -89,18 +71,23 @@ const Product = (props) => {
       </div>
     );
   };
-
   return (
     <div class="flex flex-col h-screen w-full bg-gray-100 ">
       <div class="flex flex-row w-full rounded-xl p-3">
         <div class="flex flex-col w-1/2 bg-white shadow-lg p-2 mr-2">
           <div class="font-bold text-2xl self-start mb-2">{currItem.name}</div>
-          <div class="flex h-56 w-1/2 bg-gray-200">image</div>
+          <img
+            class="flex h-56 w-1/2 bg-white object-cover"
+            src={currItem.imageUrl}
+            //src={require("../Assets/Images/port-gun.jpeg").default}
+          />
         </div>
         <div class="flex flex-col w-1/2 items-start bg-white shadow-lg  p-2 ml-2">
           <div class="mb-2 ">
             <a class="text-black font-bold text-2xl">Price: </a>
-            <a class="text-yellow-500 font-bold text-2xl">{currItem.price}</a>
+            <a class="text-yellow-500 font-bold text-2xl">
+              £{formatPrice(currItem.price)}
+            </a>
           </div>
           <StarRating count={5} />
           <a class="flex mb-2 ">In Stock</a>
@@ -118,13 +105,7 @@ const Product = (props) => {
       </div>
       {/* <p>{currItem.description}</p> */}
       <p class="bg-white shadow-lg rounded-l ml-2 mr-2">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        {currItem.description}
       </p>
     </div>
   );

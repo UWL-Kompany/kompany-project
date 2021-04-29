@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons"; // the icons used
 
 import { addToCart, removeFromCart } from "../Redux/Actions/cartActions";
+import { formatPrice } from "../Utils/format";
 
 const Basket = ({ props }) => {
   const [visible, setVisible] = useState(false);
@@ -34,7 +35,7 @@ const Basket = ({ props }) => {
         <div class="bg-gray-100 w-full absolute right-3 rounded-md mt-2 shadow-lg">
           <div class="w-full rounded-t-md border-primary border-b-2 pt-1 pb-1 text-xl font-bold">
             Total:{"  £"}
-            {cartItems.reduce((a, c) => a + c.price * c.count, 0)}
+            {formatPrice(cartItems.reduce((a, c) => a + c.price * c.count, 0))}
             {/* {util.formatCurrency(
               cartItems.reduce((a, c) => a + c.price * c.count, 0)
             )} */}
@@ -52,7 +53,7 @@ const Basket = ({ props }) => {
                 </button>
                 <br />
                 {/* {item.count} X {util.formatCurrency(item.price)} */}
-                {item.count} X {item.price}
+                {item.count} X {formatPrice(item.price)}
               </li>
             ))}
           </ul>

@@ -1,66 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../Redux/Actions/cartActions";
+import { formatPrice } from "../Utils/format";
 // import logo from "../Images/UWL-Logo.png";
+
+const products = require("../Data/products-data.js");
 
 const Products = (props) => {
   // the main Products page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
   // uses Tailwind CSS for styling
   const cartItems = useSelector((state) => state.cart.items);
-
+  const [data, setData] = useState(products);
   const dispatch = useDispatch();
-  let data = [
-    {
-      name: "A Clone Trooper",
-      id: 0,
-      price: "30.00",
-      count: 0,
-      description: "",
-    },
-    {
-      name: "The Infinity Gauntlet",
-      id: 1,
-      price: "30.00",
-      count: 0,
-      description: "",
-    },
-    { name: "Stormbreaker", id: 2, price: "30.00", count: 0, description: "" },
-    {
-      name: "Just Cause Grapple",
-      id: 3,
-      price: "30.00",
-      count: 0,
-      description: "",
-    },
-    { name: "A Lightsaber", id: 4, price: "30.00", count: 0, description: "" },
-    {
-      name: "The Dark Knight Suit",
-      id: 5,
-      price: "30.00",
-      count: 0,
-      description: "",
-    },
-    { name: "The Tumbler", id: 6, price: "30.00", count: 0, description: "" },
-    {
-      name: "Iron Man MKLXXXV",
-      id: 7,
-      price: "30.00",
-      count: 0,
-      price: "30.00",
-      count: 0,
-      description: "",
-    },
-    {
-      name: "Captain America's Shield",
-      id: 8,
-      price: "30.00",
-      count: 0,
-      description: "",
-    },
-    { name: "Grogu", id: 9, price: "30.00", count: 0, description: "" },
-  ];
 
   useEffect(() => {
     console.log(cartItems);
@@ -74,12 +27,13 @@ const Products = (props) => {
         to={{ pathname: "/product/" + item.id, state: item }} // navigate to specified id and pass course data to next screen
       >
         <img
-          class="h-40 w-40 bg-gray-700"
-          src={require("../Assets/Images/port-gun.jpeg").default}
+          class="h-40 w-40 bg-white object-cover"
+          src={item.imageUrl !== "" ? item.imageUrl : ""}
+          //src={require("../Assets/Images/port-gun.jpeg").default}
         />
         <div class="flex flex-col items-start self-start">
           <b>{item.name}</b>
-          <b class="text-yellow-600">£{item.price}</b>
+          <b class="text-yellow-600">£{formatPrice(item.price)}</b>
         </div>
       </Link>
     ));
@@ -98,7 +52,7 @@ const Products = (props) => {
       <div className="flex font-bold text-black text-4xl mr-5 text-right">
         Our Products
       </div>
-      <div class="flex flex-row h-screen w-full mt-5">
+      <div class="flex flex-row h-full w-full mt-5">
         <div class="flex flex-col w-full h-full mx-5 rounded-sm p-3">
           <ProductList />
           <div class="font-bold mt-10">Check out our product range!</div>
