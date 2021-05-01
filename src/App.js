@@ -24,6 +24,7 @@ import Account from "./Views/Account";
 import About from "./Views/About";
 import MyDetails from "./Views/MyDetails";
 import Orders from "./Views/Orders";
+import Order from "./Views/Order";
 
 function App() {
   const history = useHistory();
@@ -79,6 +80,9 @@ function App() {
         </Route>
         <Route exact path="/orders">
           <Orders />
+        </Route>
+        <Route exact path="/order">
+          <Order />
         </Route>
       </Switch>
       <Footer />

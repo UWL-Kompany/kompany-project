@@ -152,7 +152,7 @@ const Register = (props) => {
           </div>
           <Link
             class="flex flex-col p-2 text-blue-600 font-bold text-right"
-            //to={{ pathname: "/product/" + item.id, state: item }} // TODO add link to order page
+            to={{ pathname: "order", state: item }} // navigate to specified order
           >
             {"View Order Details >"}
           </Link>
