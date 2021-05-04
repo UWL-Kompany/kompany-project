@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../Redux/Actions/cartActions";
+import {
+  addToCompare,
+  removeFromCompare,
+} from "../Redux/Actions/compareActions";
 import { formatPrice } from "../Utils/format";
 // import logo from "../Images/UWL-Logo.png";
 
@@ -12,19 +16,42 @@ const Product = (props) => {
   // the main Products page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
   // uses Tailwind CSS for styling
-
+  const compareItems = useSelector((state) => state.compare.items);
   const cartItems = useSelector((state) => state.cart.items);
   let data = useLocation().state; // get passed course data, assigns each const based n passsed data
   const [id] = useState(data.id);
   //const [id, setId] = useState(1);
   const [currItem, setCurrItem] = useState(data);
   const [quantity, setQuantity] = useState(1);
-
+  const [comparedItem, setComparedItem] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     //setCurrItem(tempData[id]);
+    checkCompare();
   }, []);
+
+  const checkCompare = () => {
+    console.log("Here");
+    if (compareItems.length > 0) {
+      console.log("Here 2");
+      compareItems.forEach((item) => {
+        if (item.id === currItem.id) {
+          setComparedItem(true);
+        }
+      });
+    }
+  };
+
+  const addCompare = async () => {
+    dispatch(addToCompare(compareItems, currItem, 1));
+    setComparedItem(true);
+  };
+
+  const removeCompare = async () => {
+    dispatch(removeFromCompare(compareItems, currItem));
+    setComparedItem(false);
+  };
 
   const StarRating = ({ count }) => {
     const listStars = [];
@@ -96,11 +123,42 @@ const Product = (props) => {
             <Dropdown count={9} />
           </div>
           <button
-            class="flex w-1/3 justify-center bg-primary border-black border-2 text-white"
+            class="flex w-1/3 justify-center bg-primary border-black border-2 text-white mb-2"
             onClick={(e) => addAllToCart(quantity)}
           >
             Add to Basket
           </button>
+          <button
+            class="flex w-1/3 justify-center bg-primary border-black border-2 text-white mb-2"
+            onClick={(e) => addCompare()}
+          >
+            Add to Compare
+          </button>
+
+          {comparedItem ? (
+            <div class="flex w-1/3 justify-center text-black">
+              <input
+                type="checkbox"
+                class="form-checkbox mr-2"
+                onClick={() => removeCompare()}
+              ></input>
+              <Link
+                class="flex w-1/3 justify-center bg-primary border-black border-2 text-white mb-2"
+                to={{ pathname: "/compare" }}
+              >
+                Go Compare
+              </Link>
+            </div>
+          ) : (
+            <div class="flex w-1/3 justify-center text-black">
+              <input
+                type="checkbox"
+                class="form-checkbox mr-2"
+                onClick={() => addCompare()}
+              ></input>
+              <p class="text-black">Compare</p>
+            </div>
+          )}
         </div>
       </div>
       {/* <p>{currItem.description}</p> */}

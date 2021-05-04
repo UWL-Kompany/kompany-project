@@ -16,7 +16,6 @@ function Header(props) {
   const login = useSelector((state) => state.account.login);
 
   const logoutAttempt = () => {
-    console.log("getting here");
     dispatch(toggleAccountLogin(false));
     let response = { data: {} }; // TODO change this to get server response
     localStorage.setItem("user", JSON.stringify(response.data));

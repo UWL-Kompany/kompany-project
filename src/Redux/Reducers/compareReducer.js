@@ -3,6 +3,7 @@ import {
   REMOVE_FROM_COMPARE,
   CLEAR_COMPARE,
 } from "../Actions/types";
+// const initState = { items: [] };
 export default function (state = {}, action) {
   switch (action.type) {
     case ADD_TO_COMPARE:

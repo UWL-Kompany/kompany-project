@@ -3,18 +3,15 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import DealsBanner from "../Components/DealBanner";
 import { formatPrice } from "../Utils/format";
-// import logo from "../Images/UWL-Logo.png";
-
-import test_image from "../Assets/Images/port-gun.jpeg";
 
 const products = require("../Data/products-data.js");
 
 const Home = (props) => {
-  // the main home page, displays some about infomation along with a logo for UWL
+  // the main home page, displays products and some product sections
   // also includes links to other pages
   // uses Tailwind CSS for styling
   const history = useHistory();
-  const login = useSelector((state) => state.account.login);
+  //const login = useSelector((state) => state.account.login);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [recentProducts, setRecentProducts] = useState([]);
