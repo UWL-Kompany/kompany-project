@@ -2,18 +2,33 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 //import Navigation from "./Navigation";
-
+import {
+  toggleAccountLogin,
+  changeDetails,
+} from "../Redux/Actions/accountActions";
 import Basket from "./Basket";
 
 import logo_small from "../Assets/Images/logo-small.png";
 import logo_big from "../Assets/Images/logo-big.png";
 
 function Header(props) {
+  const dispatch = useDispatch();
   const login = useSelector((state) => state.account.login);
 
-  const HeaderButton = ({ name, link }) => {
+  const logoutAttempt = () => {
+    console.log("getting here");
+    dispatch(toggleAccountLogin(false));
+    let response = { data: {} }; // TODO change this to get server response
+    localStorage.setItem("user", JSON.stringify(response.data));
+  };
+
+  const HeaderButton = ({ name, link, click = () => {} }) => {
     return (
-      <Link to={"/" + link} className="flex justify-between mr-3 ml-3">
+      <Link
+        to={"/" + link}
+        className="flex justify-between mr-3 ml-3"
+        onClick={click}
+      >
         <div class="cursor-pointer flex justify-center ">{name}</div>
       </Link>
     );
@@ -41,6 +56,11 @@ function Header(props) {
           <HeaderButton name="Galactic Items" link="products" />
           <HeaderButton name="My Account" link="account" />
           <HeaderButton name="About Us" link="about" />
+          <HeaderButton
+            name="Logout"
+            link="login"
+            click={() => logoutAttempt()}
+          />
         </div>
         <input
           type="text"
