@@ -76,27 +76,32 @@ exports.userUpdate = async (req, res) => {
 exports.userCreate = async (req, res) => {
   // Add new user to database
   knex("user")
-    .insert({
-      // insert new record
-      id: req.body.id,
-      name: req.body.name,
-      code: req.body.code,
-      type: req.body.type,
-      duration: req.body.duration,
-      month: req.body.month,
-      year: req.body.year,
-      department: req.body.department,
-    })
+    .insert(
+      req.body.data
+      //   {
+      //   // register new user
+      //   id: req.body.id,
+      //   first_name: req.body.first_name,
+      //   last_name: req.body.last_name,
+      //   password: req.body.password,
+      //   token: req.body.token,
+      //   email: req.body.email,
+      //   address1: req.body.address1,
+      //   address2: req.body.address2,
+      //   address3: req.body.address3,
+      //   is_admin: req.body.is_admin,
+      // }
+    )
     .then(() => {
       // Send a success message in response
       res.json({
-        message: `Course \'${req.body.name}\' with id ${req.body.id} created.`,
+        message: `User \'${req.body.data.first_name}\' with id ${req.body.data.id} created.`,
       });
     })
     .catch((err) => {
       // Send a error message in response
       res.json({
-        message: `There was an error creating ${req.body.name} : ${err}`,
+        message: `There was an error registering ${req.body.first_name} : ${err}`,
       });
     });
 };

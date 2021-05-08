@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import productReducers from "./productReducer";
 import cartReducers from "./cartReducer";
 import accountReducers from "./accountReducer";
-import compareReducers from "./compareReducer";
+import compareReducers from "./recentReducer";
 
 export default combineReducers({
   products: productReducers,

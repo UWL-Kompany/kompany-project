@@ -1,22 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
 import { addToCart } from "../Redux/Actions/cartActions";
 import { formatPrice } from "../Utils/format";
 // import logo from "../Images/UWL-Logo.png";
-
-const products = require("../Data/products-data.js");
 
 const Products = (props) => {
   // the main Products page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
   // uses Tailwind CSS for styling
   const cartItems = useSelector((state) => state.cart.items);
-  const [data, setData] = useState(products);
+  const [data, setData] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(cartItems);
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = useCallback(() => {
+    // Send GET request to 'courses/all'
+    axios
+      .get("http://localhost:4001/product/all")
+      .then((response) => {
+        // set product state
+        setData(response.data);
+        // Update loading state
+        // setLoading(false);
+      })
+      .catch((error) =>
+        console.error(
+          `There was an error retrieving the product list: ${error}`
+        )
+      );
   }, []);
 
   function ProductList() {

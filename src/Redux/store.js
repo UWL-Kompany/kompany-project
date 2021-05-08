@@ -8,9 +8,13 @@ const cartItems = localStorage.getItem("cartItems")
 const compareItems = localStorage.getItem("compareItems")
   ? JSON.parse(localStorage.getItem("compareItems"))
   : [];
+const recentItems = localStorage.getItem("recentItems")
+  ? JSON.parse(localStorage.getItem("recentItems"))
+  : [];
 const initState = {
   cart: { items: cartItems },
   compare: { items: compareItems },
+  recent: { items: recentItems },
 };
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
