@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import DealsBanner from "../Components/DealBanner";
 import { formatPrice } from "../Utils/format";
-
-const products = require("../Data/products-data.js");
+import axios from "axios";
 
 const Home = (props) => {
   // the main home page, displays products and some product sections
@@ -12,6 +11,7 @@ const Home = (props) => {
   // uses Tailwind CSS for styling
   const history = useHistory();
   //const login = useSelector((state) => state.account.login);
+  const [products, setProducts] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [recentProducts, setRecentProducts] = useState([]);
@@ -21,45 +21,61 @@ const Home = (props) => {
     // if (!login) {
     //   forceNextScreen();
     // }
-    generateLists();
+    fetchProducts();
   }, []);
 
-  const generateLists = () => {
+  const fetchProducts = useCallback(() => {
+    // Send GET request to 'courses/all'
+    axios
+      .get("http://localhost:4001/product/all")
+      .then((response) => {
+        // set product state
+        setProducts(response.data);
+        generateLists(response.data);
+      })
+      .catch((error) =>
+        console.error(
+          `There was an error retrieving the product list: ${error}`
+        )
+      );
+  }, []);
+
+  const generateLists = (prods) => {
     // generate recent products
     let tempList = [];
     let numList = [];
     let rnd = Math.floor(Math.random() * 6);
     for (let i = 0; i < rnd; i++) {
-      let pos = Math.floor(Math.random() * products.length);
+      let pos = Math.floor(Math.random() * prods.length);
       while (numList.includes(pos)) {
-        pos = Math.floor(Math.random() * products.length);
+        pos = Math.floor(Math.random() * prods.length);
       }
       numList.push(pos);
-      tempList.push(products[pos]);
+      tempList.push(prods[pos]);
     }
     setRecentProducts(tempList);
     // generate featured products
     tempList = [];
     numList = [];
     for (let i = 0; i < 4; i++) {
-      let pos = Math.floor(Math.random() * products.length);
+      let pos = Math.floor(Math.random() * prods.length);
       while (numList.includes(pos)) {
-        pos = Math.floor(Math.random() * products.length);
+        pos = Math.floor(Math.random() * prods.length);
       }
       numList.push(pos);
-      tempList.push(products[pos]);
+      tempList.push(prods[pos]);
     }
     setFeaturedProducts(tempList);
     // generate featured products
     tempList = [];
     numList = [];
     for (let i = 0; i < 6; i++) {
-      let pos = Math.floor(Math.random() * products.length);
+      let pos = Math.floor(Math.random() * prods.length);
       while (numList.includes(pos)) {
-        pos = Math.floor(Math.random() * products.length);
+        pos = Math.floor(Math.random() * prods.length);
       }
       numList.push(pos);
-      tempList.push(products[pos]);
+      tempList.push(prods[pos]);
     }
     setTrendingProducts(tempList);
   };

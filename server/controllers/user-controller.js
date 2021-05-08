@@ -76,22 +76,7 @@ exports.userUpdate = async (req, res) => {
 exports.userCreate = async (req, res) => {
   // Add new user to database
   knex("user")
-    .insert(
-      req.body.data
-      //   {
-      //   // register new user
-      //   id: req.body.id,
-      //   first_name: req.body.first_name,
-      //   last_name: req.body.last_name,
-      //   password: req.body.password,
-      //   token: req.body.token,
-      //   email: req.body.email,
-      //   address1: req.body.address1,
-      //   address2: req.body.address2,
-      //   address3: req.body.address3,
-      //   is_admin: req.body.is_admin,
-      // }
-    )
+    .insert(req.body.data)
     .then(() => {
       // Send a success message in response
       res.json({
