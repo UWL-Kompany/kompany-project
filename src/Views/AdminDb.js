@@ -35,6 +35,16 @@ const AdminDb = (props) => {
     }
     const listItems = products.map((item) => (
       <tr class="border-t-2 border-black">
+        <td class="justify-center items-center mt-1 mb-1">
+          <div
+            class="w-2/4 cursor-pointer self-center bg-primary p-1 rounded-xl ml-8 text-white"
+            onClick={() => {
+              //userDelete(item.id);
+            }}
+          >
+            Edit
+          </div>
+        </td>
         <td class="">
           <img class="h-20 ml-10" src={item.imageUrl} />
         </td>
@@ -60,6 +70,7 @@ const AdminDb = (props) => {
       <table class={"table-auto"}>
         <thead>
           <tr>
+            <th class="w-1/12">Edit?</th>
             <th class="w-1/12">Picture</th>
             <th class="w-2/12">Name</th>
             <th class="w-2/12">Description</th>
@@ -79,6 +90,14 @@ const AdminDb = (props) => {
     <div class="flex flex-col h-full w-full content-center items-center pb-60">
       <div className="flex font-bold text-black text-4xl mb-4 text-right ">
         Database
+      </div>
+      <div
+        class="w-1/6 cursor-pointer self-start bg-primary p-1 rounded-xl ml-10 mb-5 text-white"
+        onClick={() => {
+          //userDelete(item.id);
+        }}
+      >
+        Add New Product
       </div>
       <Products />
     </div>
