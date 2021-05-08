@@ -27,6 +27,12 @@ import Orders from "./Views/Orders";
 import Order from "./Views/Order";
 import Compare from "./Views/Compare";
 
+// admin pages
+import Admin from "./Views/Admin";
+import AdminDb from "./Views/AdminDb";
+import AdminUsers from "./Views/AdminUsers";
+//import AdminDb from "./Views/AdminDb";
+
 function App() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -87,6 +93,15 @@ function App() {
         </Route>
         <Route exact path="/compare">
           <Compare />
+        </Route>
+        <Route exact path="/admin">
+          <Admin />
+        </Route>
+        <Route exact path="/adminDb">
+          <AdminDb />
+        </Route>
+        <Route exact path="/adminUsers">
+          <AdminUsers />
         </Route>
       </Switch>
       <Footer />

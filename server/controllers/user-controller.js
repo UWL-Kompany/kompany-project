@@ -90,3 +90,22 @@ exports.userCreate = async (req, res) => {
       });
     });
 };
+
+// Remove requirements for one course
+exports.userDelete = async (req, res) => {
+  // Find specific requirement in the database and remove it
+  console.log("deleter id: " + req.body.id);
+  knex("user")
+    .where("id", req.body.id) // find correct record based on id
+    .del() // delete the record
+    .then(() => {
+      // Send a success message in response
+      res.json({ message: `User ${req.body.id} deleted.` });
+    })
+    .catch((err) => {
+      // Send a error message in response
+      res.json({
+        message: `There was an error deleting ${req.body.id} user: ${err}`,
+      });
+    });
+};

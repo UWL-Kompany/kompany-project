@@ -31,8 +31,8 @@ const Login = (props) => {
     //console.log("login status: " + login.toString());
   }, []);
 
-  const forceNextScreen = () => {
-    history.push("/");
+  const forceNextScreen = (view) => {
+    history.push("/" + view);
   };
 
   const validation = () => {
@@ -129,8 +129,13 @@ const Login = (props) => {
       .then((res) => {
         if (res.data.status.success === true) {
           dispatch(toggleAccountLogin(true));
-          localStorage.setItem("user", JSON.stringify(res.data));
-          forceNextScreen();
+          localStorage.setItem("user", JSON.stringify(res.data.data));
+          console.log(res.data.data);
+          if (res.data.data.is_admin) {
+            forceNextScreen("admin");
+          } else {
+            forceNextScreen("");
+          }
         } else {
           setStatus({ message: res.data.status.message });
         }
