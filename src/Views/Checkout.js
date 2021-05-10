@@ -8,7 +8,7 @@ import {
   toggleAccountLogin,
   changeDetails,
 } from "../Redux/Actions/accountActions";
-
+import axios from "axios";
 const Checkout = (props) => {
   // the main Products page, displays some about infomation along with a logo for UWL
   // also includes links to other pages
@@ -21,12 +21,6 @@ const Checkout = (props) => {
 
   useEffect(() => {}, []);
   // cart -> address -> payment -> confirm
-
-  function completePurchase() {
-    setSection({ status: "Review", level: 4 });
-    setOrderItems(cartItems);
-    dispatch(clearCart(cartItems));
-  }
 
   const ProgressLevel = ({ level, name }) => {
     return (
@@ -171,18 +165,20 @@ const Checkout = (props) => {
         <div class="bg-gray-100 w-2/4">
           <a>Purchase Complete! Many Thanks!</a>
           <ul style={{}}>
-            {orderItems.map((item) => (
-              <li key={item.id}>
-                <b>{item.name}</b>
-                <br />
-                {/* {item.count} X {util.formatCurrency(item.price)} */}
-                {item.count} X {item.price}
-              </li>
-            ))}
+            {orderItems.length > 0 &&
+              orderItems.map((item) => (
+                <li key={item.id}>
+                  <b>{item.name}</b>
+                  <br />
+                  {/* {item.count} X {util.formatCurrency(item.price)} */}
+                  {item.count} X {item.price}
+                </li>
+              ))}
           </ul>
           <b>
             Sum:
-            {orderItems.reduce((a, c) => a + c.price * c.count, 0)}
+            {orderItems.length > 0 &&
+              orderItems.reduce((a, c) => a + c.price * c.count, 0)}
             {/* {util.formatCurrency(
                   cartItems.reduce((a, c) => a + c.price * c.count, 0)
                 )} */}
@@ -193,6 +189,90 @@ const Checkout = (props) => {
 
     return <div>SOMETHING MESSED UP</div>;
   }
+
+  // const nextProductId = () => {
+  //   let newId = products[products.length - 1].id + 1;
+
+  //   return newId;
+  // };
+
+  const createOrder = async (order) => {
+    axios
+      .post("http://localhost:4001/order/create", {
+        // POST to insert new student into database
+        data: order, // send data to insert
+      })
+      .then((res) => {
+        // success
+        console.log(res.data.message);
+        //setSubmitted({ status: true, loading: false, error: false }); // set the state of submitted data
+        setSection({ status: "Review", level: 4 });
+        setOrderItems(cartItems);
+        dispatch(clearCart(cartItems));
+      })
+      .catch((error) => {
+        // there was a problem
+        console.log("ERROR");
+        console.error(error);
+        //setSubmitted({ status: false, loading: false, error: true }); // set the state of submitted data
+      });
+  };
+
+  const createOrderProducts = async (order) => {
+    axios
+      .post("http://localhost:4001/orderProducts/create", {
+        // POST to insert new student into database
+        data: order, // send data to insert
+      })
+      .then((res) => {
+        // success
+        console.log(res.data.message);
+        //setSubmitted({ status: true, loading: false, error: false }); // set the state of submitted data
+      })
+      .catch((error) => {
+        // there was a problem
+        console.log("ERROR");
+        console.error(error);
+        //setSubmitted({ status: false, loading: false, error: true }); // set the state of submitted data
+      });
+  };
+
+  const completePurchase = () => {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    today = mm + "-" + dd + "-" + yyyy;
+    let date = dd + "/" + mm + "/" + yyyy;
+    let id = Math.floor(Math.random() * 10000000) + 1;
+    let order = {
+      id: id,
+      userId: "1541235",
+      status: "Processing",
+      order_date: date,
+      shipped_date: "",
+      delivery_date: "",
+    };
+    console.log(JSON.stringify(order));
+    createOrder(order);
+    cartItems.forEach((item) => {
+      let orderDetails = {
+        id: Math.floor(Math.random() * 10000000) + 1,
+        orderId: id,
+        productId: item.id,
+        quantity: item.count,
+        price: item.price,
+      };
+      console.log(JSON.stringify(orderDetails));
+      createOrderProducts(orderDetails);
+    });
+  };
 
   return (
     <div className="flex h-screen flex-col items-center">
@@ -208,4 +288,3 @@ const Checkout = (props) => {
 };
 
 export default Checkout;
-

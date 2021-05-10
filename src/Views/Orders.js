@@ -175,11 +175,8 @@ const Register = (props) => {
       let items = [];
       let total = 0;
       ordDetails.forEach((pro) => {
-        console.log("Getting here 1");
         if (pro.orderId === ord.id) {
           let item = {};
-          console.log(pro.productId);
-          console.log(JSON.stringify(prodDetails));
           item = prodDetails.filter(
             (prod) => prod.id.toString() === pro.productId.toString()
             // (prod) =>
@@ -191,10 +188,7 @@ const Register = (props) => {
             //       (prod.id.toString() === pro.productId.toString())
             //   )
           )[0];
-          console.log("Getting here 1.2");
-          console.log(JSON.stringify(item));
           item.quantity = pro.quantity;
-          console.log("Getting here 1.21");
           item.price = pro.price;
           total += item.quantity * item.price;
           items.push(item);
@@ -208,10 +202,7 @@ const Register = (props) => {
       };
       tempData.push(tempOrd);
     });
-    console.log("Getting here 4");
-    console.log(JSON.stringify(tempData));
     setOrderData(tempData);
-    //console.log(JSON.stringify(tempData));
   };
 
   function ProductList({ products }) {
