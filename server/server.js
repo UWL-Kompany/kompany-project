@@ -8,6 +8,9 @@ const helmet = require("helmet");
 // Import routes
 const productRouter = require("./routes/product-route");
 const userRouter = require("./routes/user-route");
+const orderRouter = require("./routes/order-route");
+const orderProductsRouter = require("./routes/order-products-route");
+//const paymentRouter = require("./routes/payment-route");
 
 // Set default port for express app, using a local network
 const PORT = process.env.PORT || 4001;
@@ -25,6 +28,9 @@ app.use(bodyParser.json());
 // Implement system routes
 app.use("/product", productRouter);
 app.use("/user", userRouter);
+app.use("/order", orderRouter);
+app.use("/orderProducts", orderProductsRouter);
+//app.use("/payment", paymentRouter);
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {

@@ -25,10 +25,7 @@ const Order = (props) => {
       <tr class="border-t-2 border-black">
         <td class="flex flex-row justify-between items-center ">
           <b>{item.name}</b>
-          <img
-            class="h-40 w-40 bg-gray-700 ml-10"
-            src={require("../Assets/Images/port-gun.jpeg").default}
-          />
+          <img class="h-40 w-40 ml-10" src={item.imageUrl} />
         </td>
         <td class="">£{item.price}</td>
         <td class="">£{5.0}</td>

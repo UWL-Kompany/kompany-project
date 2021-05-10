@@ -4,7 +4,9 @@ const path = require("path");
 //import local stored data files for tables
 const product = require("../src/Data/products-data");
 const user = require("../src/Data/user-data");
-
+const order = require("../src/Data/order-data");
+const orderProducts = require("../src/Data/order-products-data");
+const payment = require("../src/Data/payment-data");
 // Get the location of database.sqlite file, if nothing create one
 const dbPath = path.resolve(__dirname, "db/database.sqlite");
 
@@ -91,6 +93,113 @@ knex.schema
   .then(() => {
     // Log success message
     console.log("done: user");
+  })
+  .catch((error) => {
+    console.error(`There was an error setting up the database: ${error}`);
+  });
+
+// Create a table in the database called "product"
+knex.schema
+  // Make sure no "user" table exists
+  // before trying to create new
+  .hasTable("order")
+  .then((exists) => {
+    if (!exists) {
+      // if it doesn't exist create new "user" table
+      return knex.schema
+        .createTable("order", (table) => {
+          //table headers
+          table.string("id").primary(); // incremental id creation
+          table.string("userId");
+          table.string("status");
+          table.string("order_date");
+          table.string("shipped_date");
+          table.string("delivery_date");
+        })
+        .then(() => {
+          // Log success message
+          console.log("Table 'order' created");
+          return knex("order").insert([...order]);
+        })
+        .catch((error) => {
+          console.error(`There was an error creating table: ${error}`);
+        });
+    }
+  })
+  .then(() => {
+    // Log success message
+    console.log("done: order");
+  })
+  .catch((error) => {
+    console.error(`There was an error setting up the database: ${error}`);
+  });
+
+// Create a table in the database called "product"
+knex.schema
+  // Make sure no "user" table exists
+  // before trying to create new
+  .hasTable("order-products")
+  .then((exists) => {
+    if (!exists) {
+      // if it doesn't exist create new "user" table
+      return knex.schema
+        .createTable("order-products", (table) => {
+          //table headers
+          table.string("id").primary(); // incremental id creation
+          table.string("orderId");
+          table.string("productId");
+          table.string("quantity");
+          table.string("price");
+        })
+        .then(() => {
+          // Log success message
+          console.log("Table 'order-products' created");
+          return knex("order-products").insert([...orderProducts]);
+        })
+        .catch((error) => {
+          console.error(`There was an error creating table: ${error}`);
+        });
+    }
+  })
+  .then(() => {
+    // Log success message
+    console.log("done: order-products");
+  })
+  .catch((error) => {
+    console.error(`There was an error setting up the database: ${error}`);
+  });
+
+// Create a table in the database called "product"
+knex.schema
+  // Make sure no "user" table exists
+  // before trying to create new
+  .hasTable("payment")
+  .then((exists) => {
+    if (!exists) {
+      // if it doesn't exist create new "user" table
+      return knex.schema
+        .createTable("payment", (table) => {
+          //table headers
+          table.string("id").primary(); // incremental id creation
+          table.string("userId");
+          table.string("card_holder_name");
+          table.string("long_number");
+          table.string("expire_date");
+          table.string("csv");
+        })
+        .then(() => {
+          // Log success message
+          console.log("Table 'payment' created");
+          return knex("payment").insert([...payment]);
+        })
+        .catch((error) => {
+          console.error(`There was an error creating table: ${error}`);
+        });
+    }
+  })
+  .then(() => {
+    // Log success message
+    console.log("done: payment");
   })
   .catch((error) => {
     console.error(`There was an error setting up the database: ${error}`);

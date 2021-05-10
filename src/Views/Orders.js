@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import logo from "../Images/UWL-Logo.png";
 import { Link, useHistory } from "react-router-dom";
@@ -7,6 +7,7 @@ import {
   changeDetails,
 } from "../Redux/Actions/accountActions";
 import logo_big from "../Assets/Images/logo-big.png";
+import axios from "axios";
 
 const Register = (props) => {
   // the main Products page, displays some about infomation along with a logo for UWL
@@ -14,7 +15,8 @@ const Register = (props) => {
   // uses Tailwind CSS for styling
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const [genData, setGenData] = useState([]);
+  const [orderData, setOrderData] = useState([]);
   let data = [
     {
       date: "01/01/2021",
@@ -105,17 +107,119 @@ const Register = (props) => {
     },
   ];
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = useCallback(() => {
+    // Send GET request to 'courses/all'
+
+    axios
+      .get("http://localhost:4001/order/single", { params: { id: "1541235" } })
+      .then((response) => {
+        // set product state
+        fetchOrderDetails(response.data);
+      })
+      .catch((error) =>
+        console.error(
+          `There was an error retrieving the product list: ${error}`
+        )
+      );
+  }, []);
+
+  const fetchOrderDetails = useCallback((ords) => {
+    // Send GET request to 'courses/all'
+    let ordNums = ords.map((ord) => ord.id);
+    console.log("trying to fetch order details");
+    axios
+      .get("http://localhost:4001/orderProducts/all_group", {
+        params: { data: ordNums },
+      })
+      .then((response) => {
+        // set product state
+        //console.log(response.data);
+        fetchProductDetails(ords, response.data);
+      })
+      .catch((error) =>
+        console.error(
+          `There was an error retrieving the product list: ${error}`
+        )
+      );
+  }, []);
+
+  const fetchProductDetails = useCallback((ords, ordDetails) => {
+    // Send GET request to 'courses/all'
+    console.log("trying to fetch product details");
+    let prodNums = ordDetails.map((ord) => ord.productId);
+    axios
+      .get("http://localhost:4001/product/all_group", {
+        params: { data: prodNums },
+      })
+      .then((response) => {
+        // set product state
+        // console.log(response.data);
+        createOrderData(ords, ordDetails, response.data);
+      })
+      .catch((error) =>
+        console.error(
+          `There was an error retrieving the product list: ${error}`
+        )
+      );
+  }, []);
+
+  const createOrderData = (ords, ordDetails, prodDetails) => {
+    let tempData = [];
+    console.log("trying to fetch sort orders");
+
+    ords.forEach((ord) => {
+      let items = [];
+      let total = 0;
+      ordDetails.forEach((pro) => {
+        console.log("Getting here 1");
+        if (pro.orderId === ord.id) {
+          let item = {};
+          console.log(pro.productId);
+          console.log(JSON.stringify(prodDetails));
+          item = prodDetails.filter(
+            (prod) => prod.id.toString() === pro.productId.toString()
+            // (prod) =>
+            //   console.log(
+            //     pro.productId +
+            //       " : " +
+            //       prod.id +
+            //       " = " +
+            //       (prod.id.toString() === pro.productId.toString())
+            //   )
+          )[0];
+          console.log("Getting here 1.2");
+          console.log(JSON.stringify(item));
+          item.quantity = pro.quantity;
+          console.log("Getting here 1.21");
+          item.price = pro.price;
+          total += item.quantity * item.price;
+          items.push(item);
+        }
+      });
+      let tempOrd = {
+        date: ord.order_date,
+        orderNo: ord.id,
+        total: total,
+        items: items,
+      };
+      tempData.push(tempOrd);
+    });
+    console.log("Getting here 4");
+    console.log(JSON.stringify(tempData));
+    setOrderData(tempData);
+    //console.log(JSON.stringify(tempData));
+  };
 
   function ProductList({ products }) {
     // component to display mapped requirements
     let trimedProducts = products.slice(0, 3);
     const listItems = trimedProducts.map((item) => (
       <div class="flex flex-col w-full items-center">
-        <img
-          class="h-40 w-40 bg-gray-700"
-          src={require("../Assets/Images/port-gun.jpeg").default}
-        />
+        <img class="h-40 w-40" src={item.imageUrl} />
         <div class="flex flex-col">
           <b>{item.name}</b>
           <b class="text-yellow-600">£{item.price}</b>
@@ -134,7 +238,12 @@ const Register = (props) => {
 
   function OrderList() {
     // component to display mapped requirements
-    const listItems = data.map((item) => (
+    if (orderData.length < 1) {
+      return (
+        <div class="flex flex-col border-2 border-gray-400 mb-5">NO ORDERS</div>
+      );
+    }
+    const listItems = orderData.map((item) => (
       <div class="flex flex-col border-2 border-gray-400 mb-5">
         <div class="flex flex-row bg-gray-200 border-b-2 border-gray-400 justify-between">
           <div class="flex w-1/3 self-center pt-2 pb-2 border-r-2 border-gray-400 justify-center">
@@ -164,11 +273,42 @@ const Register = (props) => {
     return <div class={"flex flex-col w-1/2"}>{listItems}</div>; // return all list items in a unordered list
   }
 
+  const genOrderProductData = () => {
+    let data = [];
+    let count = 0;
+    for (let i = 0; i < 17; i++) {
+      let randCount = Math.floor(Math.random() * 6) + 1;
+      for (let j = 0; j < randCount; j++) {
+        let productId = Math.floor(Math.random() * 22);
+        let quantity = Math.floor(Math.random() * 6) + 1;
+        let price = Math.floor(Math.random() * 100);
+
+        let item = {
+          id: count++,
+          orderId: i,
+          productId: productId,
+          quantity: quantity,
+          price: price,
+        };
+        data.push(item);
+      }
+    }
+    setGenData(data);
+  };
+
   return (
     <div class="flex flex-col w-full content-center items-center">
       <div className="flex font-bold text-black text-4xl mb-4 text-right ">
         My Orders
       </div>
+      {/* <button
+        onClick={() => {
+          genOrderProductData();
+        }}
+      >
+        Generate
+      </button>
+      <div>{JSON.stringify(genData)}</div> */}
       <OrderList />
     </div>
   );
