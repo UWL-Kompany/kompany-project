@@ -18,7 +18,7 @@ const Product = (props) => {
   // uses Tailwind CSS for styling
   const compareItems = useSelector((state) => state.compare.items);
   const cartItems = useSelector((state) => state.cart.items);
-  let data = useLocation().state; // get passed course data, assigns each const based n passsed data
+  let data = useLocation().state; // get passed product data, assigns each const based n passsed data
   const [id] = useState(data.id);
   //const [id, setId] = useState(1);
   const [currItem, setCurrItem] = useState(data);
@@ -32,9 +32,7 @@ const Product = (props) => {
   }, []);
 
   const checkCompare = () => {
-    console.log("Here");
     if (compareItems.length > 0) {
-      console.log("Here 2");
       compareItems.forEach((item) => {
         if (item.id === currItem.id) {
           setComparedItem(true);
@@ -116,8 +114,12 @@ const Product = (props) => {
               £{formatPrice(currItem.price)}
             </a>
           </div>
-          <StarRating count={5} />
-          <a class="flex mb-2 ">In Stock</a>
+          <StarRating count={currItem.rating} />
+          {currItem.stock > 0 ? (
+            <a class="flex mb-2 ">In Stock</a>
+          ) : (
+            <a class="flex mb-2 ">Out of Stock</a>
+          )}
           <div class="mb-2">
             <a>Quantity: </a>
             <Dropdown count={9} />

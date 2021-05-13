@@ -27,10 +27,11 @@ const Order = (props) => {
           <b>{item.name}</b>
           <img class="h-40 w-40 ml-10" src={item.imageUrl} />
         </td>
+        <td class="">{item.quantity}</td>
         <td class="">£{item.price}</td>
         <td class="">£{5.0}</td>
-        <td>10/10/2020</td>
-        <td>10/10/2020</td>
+        <td>{order.date}</td>
+        <td>{order.dispatch_date}</td>
       </tr>
     ));
 
@@ -39,6 +40,7 @@ const Order = (props) => {
         <thead>
           <tr>
             <th class="w-2/6">Item</th>
+            <th class="w-1/12">Quantity</th>
             <th class="w-1/6">Price</th>
             <th class="w-1/6">Delivery</th>
             <th class="w-1/6">Dispatch Date</th>

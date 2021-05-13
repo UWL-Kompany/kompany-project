@@ -111,7 +111,7 @@ const Home = (props) => {
           <ProductList items={featuredProducts} />
         </div>
         <div class="flex flex-col h-full mx-5 rounded-sm p-3">
-          <div class="font-bold mt-10 text-2xl">Recently View</div>
+          <div class="font-bold mt-10 text-2xl">Recently Viewed</div>
           {recentProducts.length > 0 ? (
             <ProductList items={recentProducts} />
           ) : (
@@ -119,7 +119,7 @@ const Home = (props) => {
           )}
         </div>
         <div class="flex flex-col h-full mx-5 rounded-sm p-3">
-          <div class="font-bold mt-10 text-2xl">Trending</div>
+          <div class="font-bold mt-10 text-2xl">Deals</div>
           <ProductList items={trendingProducts} />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,7 +27,7 @@ const Compare = (props) => {
     console.log(cartItems);
   }, [compareItems]);
 
-  function ProductList() {
+  const ProductList = useCallback(() => {
     // component to display mapped requirements
     if (compareItems.length < 1) {
       return (
@@ -66,7 +66,7 @@ const Compare = (props) => {
         {listItems}
       </div>
     ); // return all list items in a unordered list
-  }
+  });
 
   return (
     <div class="flex flex-col h-full w-full justify-center justify-items-center content-center items-center place-content-center">

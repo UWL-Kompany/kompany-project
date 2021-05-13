@@ -246,46 +246,38 @@ const AdminDb = (props) => {
     product.id = nextProductId();
     product.rating = 5;
     console.log(JSON.stringify(product));
-
     axios
       .post("http://localhost:4001/product/create", {
-        // POST to insert new student into database
         data: product, // send data to insert
       })
       .then((res) => {
         // success
         console.log(res.data.message);
-        //setSubmitted({ status: true, loading: false, error: false }); // set the state of submitted data
         fetchProducts();
       })
       .catch((error) => {
         // there was a problem
         console.log("ERROR");
         console.error(error);
-        //setSubmitted({ status: false, loading: false, error: true }); // set the state of submitted data
       });
   };
 
   const updateProduct = async () => {
     let product = { ...currProduct };
     console.log(JSON.stringify(product));
-
     axios
       .put("http://localhost:4001/product/product_update", {
-        // POST to insert new student into database
         data: product, // send data to insert
       })
       .then((res) => {
         // success
         console.log(res.data.message);
-        //setSubmitted({ status: true, loading: false, error: false }); // set the state of submitted data
         fetchProducts();
       })
       .catch((error) => {
         // there was a problem
         console.log("ERROR");
         console.error(error);
-        //setSubmitted({ status: false, loading: false, error: true }); // set the state of submitted data
       });
   };
 
@@ -348,13 +340,11 @@ const AdminDb = (props) => {
   }
 
   const saveProduct = () => {
-    // TODO save currently product to db
     if (newProd) {
       createProduct();
     } else {
       updateProduct();
     }
-
     setProductModalVisible(false);
   };
 
@@ -384,7 +374,6 @@ const AdminDb = (props) => {
       >
         {productModalVisible && (
           <ProductModal
-            key="top"
             currProduct={currProduct}
             setCurrProduct={setCurrProduct}
             priceCheck={priceCheck}

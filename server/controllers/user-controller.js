@@ -52,19 +52,12 @@ exports.userLogin = async (req, res) => {
 exports.userUpdate = async (req, res) => {
   knex("user")
     .where("id", req.body.id) // find correct record based on id
-    .update({
-      // data to update
-      name: req.body.name,
-      code: req.body.code,
-      type: req.body.type,
-      duration: req.body.duration,
-      month: req.body.month,
-      year: req.body.year,
-      department: req.body.department,
-    })
+    .update(req.body.data)
     .then(() => {
       // Send user extracted from database in response
-      res.json({ message: `Course: ${req.body.name} has been updated.` });
+      res.json({
+        message: `User: ${req.body.data.first_name} has been updated.`,
+      });
     })
     .catch((err) => {
       // Send a error message in response

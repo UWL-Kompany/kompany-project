@@ -129,6 +129,7 @@ const Login = (props) => {
       .then((res) => {
         if (res.data.status.success === true) {
           dispatch(toggleAccountLogin(true));
+          dispatch(changeDetails(res.data.data));
           localStorage.setItem("user", JSON.stringify(res.data.data));
           console.log(res.data.data);
           if (res.data.data.is_admin) {

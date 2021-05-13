@@ -15,6 +15,7 @@ const Register = (props) => {
   // uses Tailwind CSS for styling
   const history = useHistory();
   const dispatch = useDispatch();
+  const account = useSelector((state) => state.account.details);
   const [genData, setGenData] = useState([]);
   const [orderData, setOrderData] = useState([]);
   let data = [
@@ -115,7 +116,7 @@ const Register = (props) => {
     // Send GET request to 'courses/all'
 
     axios
-      .get("http://localhost:4001/order/single", { params: { id: "1541235" } })
+      .get("http://localhost:4001/order/single", { params: { id: account.id } })
       .then((response) => {
         // set product state
         fetchOrderDetails(response.data);
@@ -128,7 +129,6 @@ const Register = (props) => {
   }, []);
 
   const fetchOrderDetails = useCallback((ords) => {
-    // Send GET request to 'courses/all'
     let ordNums = ords.map((ord) => ord.id);
     console.log("trying to fetch order details");
     axios
@@ -136,8 +136,6 @@ const Register = (props) => {
         params: { data: ordNums },
       })
       .then((response) => {
-        // set product state
-        //console.log(response.data);
         fetchProductDetails(ords, response.data);
       })
       .catch((error) =>
@@ -148,7 +146,6 @@ const Register = (props) => {
   }, []);
 
   const fetchProductDetails = useCallback((ords, ordDetails) => {
-    // Send GET request to 'courses/all'
     console.log("trying to fetch product details");
     let prodNums = ordDetails.map((ord) => ord.productId);
     axios
@@ -156,8 +153,6 @@ const Register = (props) => {
         params: { data: prodNums },
       })
       .then((response) => {
-        // set product state
-        // console.log(response.data);
         createOrderData(ords, ordDetails, response.data);
       })
       .catch((error) =>
@@ -169,8 +164,6 @@ const Register = (props) => {
 
   const createOrderData = (ords, ordDetails, prodDetails) => {
     let tempData = [];
-    console.log("trying to fetch sort orders");
-
     ords.forEach((ord) => {
       let items = [];
       let total = 0;
@@ -179,14 +172,6 @@ const Register = (props) => {
           let item = {};
           item = prodDetails.filter(
             (prod) => prod.id.toString() === pro.productId.toString()
-            // (prod) =>
-            //   console.log(
-            //     pro.productId +
-            //       " : " +
-            //       prod.id +
-            //       " = " +
-            //       (prod.id.toString() === pro.productId.toString())
-            //   )
           )[0];
           item.quantity = pro.quantity;
           item.price = pro.price;

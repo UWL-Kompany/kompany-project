@@ -15,7 +15,7 @@ const Checkout = (props) => {
   // uses Tailwind CSS for styling
   const cartItems = useSelector((state) => state.cart.items);
   const [orderItems, setOrderItems] = useState({});
-  const login = useSelector((state) => state.account.login);
+  const account = useSelector((state) => state.account.details);
   const [section, setSection] = useState({ status: "cart", level: 1 });
   const dispatch = useDispatch();
 
@@ -101,21 +101,19 @@ const Checkout = (props) => {
             type="text"
             class="focus:ring-indigo-500 focus:ring-2 ring-2 focus:border-indigo-500 block w-2/3 pl-7 pr-12 sm:text-xl ring-black rounded-sm mt-3"
             placeholder={"Address Line 1"} // this doesn't do anything, just for filler
+            defaultValue={account.address1}
           />
           <input
             type="text"
             class="focus:ring-indigo-500 focus:ring-2 ring-2 focus:border-indigo-500 block w-2/3 pl-7 pr-12 sm:text-xl ring-black rounded-sm mt-3"
             placeholder={"Address Line 2"} // this doesn't do anything, just for filler
+            defaultValue={account.address2}
           />
           <input
             type="text"
             class="focus:ring-indigo-500 focus:ring-2 ring-2 focus:border-indigo-500 block w-2/3 pl-7 pr-12 sm:text-xl ring-black rounded-sm mt-3"
             placeholder={"Address Line 3"} // this doesn't do anything, just for filler
-          />
-          <input
-            type="text"
-            class="focus:ring-indigo-500 focus:ring-2 ring-2 focus:border-indigo-500 block w-2/3 pl-7 pr-12 sm:text-xl ring-black rounded-sm mt-3"
-            placeholder={"Postcode"} // this doesn't do anything, just for filler
+            defaultValue={account.address3}
           />
           <button
             onClick={() => setSection({ status: "Payment", level: 3 })}
@@ -205,7 +203,6 @@ const Checkout = (props) => {
       .then((res) => {
         // success
         console.log(res.data.message);
-        //setSubmitted({ status: true, loading: false, error: false }); // set the state of submitted data
         setSection({ status: "Review", level: 4 });
         setOrderItems(cartItems);
         dispatch(clearCart(cartItems));
@@ -214,26 +211,22 @@ const Checkout = (props) => {
         // there was a problem
         console.log("ERROR");
         console.error(error);
-        //setSubmitted({ status: false, loading: false, error: true }); // set the state of submitted data
       });
   };
 
   const createOrderProducts = async (order) => {
     axios
       .post("http://localhost:4001/orderProducts/create", {
-        // POST to insert new student into database
         data: order, // send data to insert
       })
       .then((res) => {
         // success
         console.log(res.data.message);
-        //setSubmitted({ status: true, loading: false, error: false }); // set the state of submitted data
       })
       .catch((error) => {
         // there was a problem
         console.log("ERROR");
         console.error(error);
-        //setSubmitted({ status: false, loading: false, error: true }); // set the state of submitted data
       });
   };
 
@@ -248,12 +241,11 @@ const Checkout = (props) => {
     if (mm < 10) {
       mm = "0" + mm;
     }
-    today = mm + "-" + dd + "-" + yyyy;
     let date = dd + "/" + mm + "/" + yyyy;
     let id = Math.floor(Math.random() * 10000000) + 1;
     let order = {
       id: id,
-      userId: "1541235",
+      userId: account.id,
       status: "Processing",
       order_date: date,
       shipped_date: "",

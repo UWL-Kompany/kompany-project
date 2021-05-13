@@ -93,7 +93,7 @@ const Register = (props) => {
 
   const registerUser = async () => {
     let user = {
-      id: 1231456789,
+      id: Math.floor(Math.random() * 9999999) + 1,
       token: "askl;dfjaskl;",
       first_name: details.first_name.value,
       last_name: details.last_name.value,
@@ -108,7 +108,7 @@ const Register = (props) => {
 
     axios
       .post("http://localhost:4001/user/create", {
-        // POST to insert new student into database
+        // POST to insert new user into database
         data: user, // send data to insert
       })
       .then((res) => {
